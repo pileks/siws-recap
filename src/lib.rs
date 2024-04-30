@@ -13,7 +13,7 @@ pub const RESOURCE_PREFIX: &str = "urn:recap:";
 mod test {
     use super::*;
     use serde_json::Value;
-    use siwe::Message;
+    use siws::message::SiwsMessage;
 
     const SIWE_WITH_INTERLEAVED_RES: &str =
         include_str!("../tests/siwe_with_interleaved_resources.txt");
@@ -26,15 +26,15 @@ mod test {
     #[test]
     fn no_caps_statement_append() {
         let msg = Capability::<Value>::default()
-            .build_message(Message {
+            .build_message(SiwsMessage {
                 domain: "example.com".parse().unwrap(),
-                address: Default::default(),
+                address: "0000000000000000000000000000000000000000".into(),
                 statement: Some("Some custom statement.".into()),
-                uri: "did:key:example".parse().unwrap(),
-                version: siwe::Version::V1,
-                chain_id: 1,
-                nonce: "mynonce1".into(),
-                issued_at: "2022-06-21T12:00:00.000Z".parse().unwrap(),
+                uri: Some("did:key:example".parse().unwrap()),
+                version: Some("1".into()),
+                chain_id: Some("testnet".into()),
+                nonce: Some("mynonce1".into()),
+                issued_at: Some("2022-06-21T12:00:00.000Z".parse().unwrap()),
                 expiration_time: None,
                 not_before: None,
                 request_id: None,
@@ -56,15 +56,15 @@ mod test {
             .unwrap();
 
         let msg = cap
-            .build_message(Message {
+            .build_message(SiwsMessage {
                 domain: "example.com".parse().unwrap(),
-                address: Default::default(),
+                address: "0000000000000000000000000000000000000000".into(),
                 statement: Some("Some custom statement.".into()),
-                uri: "did:key:example".parse().unwrap(),
-                version: siwe::Version::V1,
-                chain_id: 1,
-                nonce: "mynonce1".into(),
-                issued_at: "2022-06-21T12:00:00.000Z".parse().unwrap(),
+                uri: Some("did:key:example".parse().unwrap()),
+                version: Some("1".into()),
+                chain_id: Some("testnet".into()),
+                nonce: Some("mynonce1".into()),
+                issued_at: Some("2022-06-21T12:00:00.000Z".parse().unwrap()),
                 expiration_time: None,
                 not_before: None,
                 request_id: None,
@@ -82,15 +82,15 @@ mod test {
     #[test]
     fn no_caps() {
         let msg = Capability::<Value>::default()
-            .build_message(Message {
+            .build_message(SiwsMessage {
                 domain: "example.com".parse().unwrap(),
-                address: Default::default(),
+                address: "0000000000000000000000000000000000000000".into(),
                 statement: None,
-                uri: "did:key:example".parse().unwrap(),
-                version: siwe::Version::V1,
-                chain_id: 1,
-                nonce: "mynonce1".into(),
-                issued_at: "2022-06-21T12:00:00.000Z".parse().unwrap(),
+                uri: Some("did:key:example".parse().unwrap()),
+                version: Some("1".into()),
+                chain_id: Some("testnet".into()),
+                nonce: Some("mynonce1".into()),
+                issued_at: Some("2022-06-21T12:00:00.000Z".parse().unwrap()),
                 expiration_time: None,
                 not_before: None,
                 request_id: None,
@@ -137,15 +137,15 @@ mod test {
                 ],
             )
             .unwrap()
-            .build_message(Message {
+            .build_message(SiwsMessage {
                 domain: "example.com".parse().unwrap(),
-                address: Default::default(),
+                address: "0000000000000000000000000000000000000000".into(),
                 statement: None,
-                uri: "did:key:example".parse().unwrap(),
-                version: siwe::Version::V1,
-                chain_id: 1,
-                nonce: "mynonce1".into(),
-                issued_at: "2022-06-21T12:00:00.000Z".parse().unwrap(),
+                uri: Some("did:key:example".parse().unwrap()),
+                version: Some("1".into()),
+                chain_id: Some("testnet".into()),
+                nonce: Some("mynonce1".into()),
+                issued_at: Some("2022-06-21T12:00:00.000Z".parse().unwrap()),
                 expiration_time: None,
                 not_before: None,
                 request_id: None,
@@ -162,7 +162,7 @@ mod test {
 
     #[test]
     fn verify() {
-        let msg: Message = SIWE.trim().parse().unwrap();
+        let msg: SiwsMessage = SIWE.trim().parse().unwrap();
         assert!(
             Capability::<Value>::extract_and_verify(&msg)
                 .transpose()
@@ -184,7 +184,7 @@ mod test {
 
     #[test]
     fn verify_interleaved_resources() {
-        let msg: Message = SIWE_WITH_INTERLEAVED_RES.trim().parse().unwrap();
+        let msg: SiwsMessage = SIWE_WITH_INTERLEAVED_RES.trim().parse().unwrap();
         assert!(
             Capability::<Value>::extract_and_verify(&msg)
                 .unwrap()

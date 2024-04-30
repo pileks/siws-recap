@@ -6,7 +6,8 @@ use serde::{Deserialize, Serialize};
 use serde_with::{serde_as, DeserializeAs, SerializeAs};
 
 use iri_string::types::UriString;
-use siwe::Message;
+// use siwe::Message;
+use siws::message::SiwsMessage;
 
 use ucan_capabilities_object::{
     Ability, AbilityNameRef, AbilityNamespaceRef, Capabilities, CapsInner, ConvertError,
@@ -236,7 +237,7 @@ where
     }
 
     /// Apply this capabilities set to a SIWE message by writing to it's statement and resource list
-    pub fn build_message(&self, mut message: Message) -> Result<Message, EncodingError> {
+    pub fn build_message(&self, mut message: SiwsMessage) -> Result<SiwsMessage, EncodingError> {
         if self.attenuations.abilities().is_empty() {
             return Ok(message);
         }
@@ -258,7 +259,7 @@ where
     NB: for<'a> Deserialize<'a>,
 {
     /// Extract the encoded capabilities from a SIWE message and ensures the correctness of the statement.
-    pub fn extract_and_verify(message: &Message) -> Result<Option<Self>, VerificationError> {
+    pub fn extract_and_verify(message: &SiwsMessage) -> Result<Option<Self>, VerificationError> {
         if let Some(c) = Self::extract(message)? {
             let expected = c.to_statement();
             match &message.statement {
@@ -271,7 +272,7 @@ where
         }
     }
 
-    fn extract(message: &Message) -> Result<Option<Self>, DecodingError> {
+    fn extract(message: &SiwsMessage) -> Result<Option<Self>, DecodingError> {
         message
             .resources
             .iter()

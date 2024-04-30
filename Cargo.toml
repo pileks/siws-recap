@@ -18,3 +18,4 @@ thiserror = "1"
 cid = "0.10"
 ucan-capabilities-object = "0.1"
 serde_jcs = "0.1"
+siws = {path = "../siws-rs/"}
