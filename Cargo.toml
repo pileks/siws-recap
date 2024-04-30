@@ -12,7 +12,6 @@ homepage = "https://github.com/pileks/siws-recap/"
 [dependencies]
 base64 = "0.12"
 iri-string = { version = "0.6", features = ["serde"] }
-siwe = "0.5"
 serde_json = { version = "1" }
 serde = { version = "1", features = ["derive"] }
 serde_with = { version = "2" }
