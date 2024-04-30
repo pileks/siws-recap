@@ -1,11 +1,13 @@
 [package]
-name = "siwe-recap"
-description = "EIP-5573: Mechanism on top of Sign-In with Ethereum for informed consent to delegate capabilities with an extensible scope mechanism."
+name = "siws-recap"
+description = "Mechanism on top of Sign-In with Solana for informed consent to delegate capabilities with an extensible scope mechanism."
 license = "Apache-2.0 OR MIT"
-version = "0.2.0"
+version = "0.0.1"
 edition = "2021"
 readme = "README.md"
-repository = "https://github.com/spruceid/siwe-recap/"
+keywords = ["solana", "sign-in", "siws"]
+repository = "https://github.com/pileks/siws-recap/"
+homepage = "https://github.com/pileks/siws-recap/"
 
 [dependencies]
 base64 = "0.12"
