@@ -2,7 +2,7 @@
 name = "siws-recap"
 description = "Mechanism on top of Sign-In with Solana for informed consent to delegate capabilities with an extensible scope mechanism."
 license = "Apache-2.0 OR MIT"
-version = "0.0.2"
+version = "0.0.3"
 edition = "2021"
 readme = "README.md"
 keywords = ["solana", "sign-in", "siws"]
